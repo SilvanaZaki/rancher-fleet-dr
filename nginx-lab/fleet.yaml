@@ -1,0 +1,15 @@
+defaultNamespace: nginx-lab
+
+targetCustomizations:
+  - name: primary
+    clusterSelector:
+      matchLabels:
+        env: primary
+
+  - name: dr
+    clusterSelector:
+      matchLabels:
+        env: dr
+    yaml:
+      overlays:
+        - scale-to-zero
