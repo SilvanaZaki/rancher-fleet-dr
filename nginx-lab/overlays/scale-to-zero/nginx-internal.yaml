@@ -1,0 +1,12 @@
+# OVERLAY FILE — only for the DR cluster
+# Fleet merges this on top of the base nginx-internal.yaml
+# Only the fields listed here are changed; everything else is inherited
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-internal                 # Must match the base file exactly, or the merge won't find it
+  namespace: nginx-lab                 # Must also match
+spec:
+  replicas: 0                          # THE ONLY CHANGE — overrides replicas: 1 from the base
+                                       # Image, ports, labels, and the Service are untouched
