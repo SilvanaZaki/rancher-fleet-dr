@@ -1,15 +1,24 @@
-defaultNamespace: nginx-lab
+# THE CONTROL FILE
+# Tells Fleet which clusters get these manifests and what's different per cluster
 
-targetCustomizations:
-  - name: primary
+defaultNamespace: nginx-lab            # Any resource without an explicit namespace lands here
+
+targetCustomizations:                  # A list of rules — one block per cluster group
+
+  # ── RULE 1: PRIMARY CLUSTER ──
+  - name: primary                      # Just a label for this rule, any name works
     clusterSelector:
       matchLabels:
-        env: primary
+        env: primary                   # Applies to clusters labelled env=primary in Rancher
+    # No overlay listed = deploy the files exactly as written
+    # Result: nginx-internal 1 replica, nginx-external 3 replicas, both running
 
+  # ── RULE 2: DR CLUSTER ──
   - name: dr
     clusterSelector:
       matchLabels:
-        env: dr
+        env: dr                        # Applies to clusters labelled env=dr in Rancher
     yaml:
       overlays:
-        - scale-to-zero
+        - scale-to-zero                # Apply files from overlays/scale-to-zero/ on top of the base
+    # Result: same deployments and services created, but 0 replicas — standby, nothing running
