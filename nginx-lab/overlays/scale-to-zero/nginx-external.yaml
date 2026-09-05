@@ -1,0 +1,11 @@
+# OVERLAY FILE — only for the DR cluster
+# Same principle: name and namespace must match the base file so Fleet knows what to patch
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-external                 # Matches the base file
+  namespace: nginx-lab
+spec:
+  replicas: 0                          # Overrides replicas: 3 from the base
+                                       # Deployment and Service still get created — just no pods
