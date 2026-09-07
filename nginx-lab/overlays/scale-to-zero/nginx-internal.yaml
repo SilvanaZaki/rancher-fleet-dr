@@ -5,8 +5,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-internal                 # Must match the base file exactly, or the merge won't find it
-  namespace: nginx-lab                 # Must also match
+  name: nginx-internal
+  namespace: nginx-lab
 spec:
-  replicas: 0                          # THE ONLY CHANGE — overrides replicas: 1 from the base
-                                       # Image, ports, labels, and the Service are untouched
+  replicas: 0
+  selector:
+    matchLabels:
+      app: nginx-internal
+  template:
+    metadata:
+      labels:
+        app: nginx-internal
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-internal-svc
+  namespace: nginx-lab
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-internal
+  ports:
+  - port: 80
+    targetPort: 80
