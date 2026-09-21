@@ -1,0 +1,10 @@
+# Tells Fleet to deploy everything in this folder to the primary cluster
+# No overlay needed Now — this is a live app, not a DR standby
+
+defaultNamespace: squadwebapp
+
+targetCustomizations:
+  - name: primary
+    clusterSelector:
+      matchLabels:
+        env: primary                 # Deploy only to primary for now
