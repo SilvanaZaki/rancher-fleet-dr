@@ -1,0 +1,14 @@
+# The Service — gives the pods a stable internal address
+# The Ingress talks to this Service, which forwards to the pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: squadwebapp-svc              # Name the Ingress will reference
+  namespace: squadwebapp
+spec:
+  type: ClusterIP                    # Internal only — Ingress handles external access
+  selector:
+    app: squadwebapp                 # Routes traffic to pods labelled app: squadwebapp
+  ports:
+  - port: 80                         # Port this service listens on
+    targetPort: 80                   # Port on the pod to forward to
