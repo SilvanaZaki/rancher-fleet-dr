@@ -1,0 +1,21 @@
+# The Deployment — tells Kubernetes what to run and how many copies
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: squadwebapp                  # Name of this deployment
+  namespace: squadwebapp             # Which namespace it lives in
+spec:
+  replicas: 2                        # Run 2 pods — if one dies, one keeps serving
+  selector:
+    matchLabels:
+      app: squadwebapp               # Links this deployment to its pods
+  template:
+    metadata:
+      labels:
+        app: squadwebapp             # Label stamped on every pod
+    spec:
+      containers:
+      - name: squadwebapp
+        image: nginx:latest          # Using nginx as a stand-in for the real app
+        ports:
+        - containerPort: 80          # Port the app listens on inside the container
