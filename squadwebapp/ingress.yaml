@@ -1,0 +1,22 @@
+# The Ingress — the routing rule that makes the app reachable externally
+# nginx controller reads this and knows: "squadwebapp.voda.com goes here"
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: squadwebapp-ingress
+  namespace: squadwebapp
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /   # Pass requests to the app root
+spec:
+  ingressClassName: nginx                            # Use the nginx ingress controller
+  rules:
+  - host: squadwebapp.voda.com                       # The hostname users will type
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: squadwebapp-svc                    # Which service to send traffic to
+            port:
+              number: 80                             # Which port on that service
