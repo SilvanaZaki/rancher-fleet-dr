@@ -1,0 +1,6 @@
+# Creates an isolated space for all SquadWebApp resources
+# Fleet will create this first before anything else
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: squadwebapp
