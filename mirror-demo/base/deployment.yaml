@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mirror-demo
+spec:
+  replicas: 1                  # RWO disk = only one pod can use it
+  strategy:
+    type: Recreate             # old pod releases the disk before the new one starts
+  selector:
+    matchLabels:
+      app: mirror-demo
+  template:
+    metadata:
+      labels:
+        app: mirror-demo
+    spec:
+      initContainers:
+      - name: seed-page        # writes the page ONCE, only if the disk is empty
+        image: busybox
+        command: ["sh", "-c", "[ -f /data/index.html ] || echo \"<h1>Written on $(date)</h1>\" > /data/index.html"]
+        volumeMounts:
+        - name: web-data
+          mountPath: /data
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: web-data
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: web-data
+        persistentVolumeClaim:
+          claimName: web-data
