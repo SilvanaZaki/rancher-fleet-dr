@@ -7,3 +7,4 @@ namespace: nginx-lab
 resources:
   - nginx-external.yaml
   - nginx-internal.yaml
+  - namespace.yaml
