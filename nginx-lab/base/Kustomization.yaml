@@ -1,0 +1,9 @@
+#This File lists the app's files and pins the namespace. 
+#The pinned namespace matters for the emergency path, where kubectl doesn't know Fleet's defaultNamespac
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nginx-lab
+resources:
+  - nginx-external.yaml
+  - nginx-internal.yaml
