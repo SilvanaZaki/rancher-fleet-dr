@@ -1,0 +1,16 @@
+defaultNamespace: mirror-demo
+kustomize:
+  dir: overlays/off
+targetCustomizations:
+  - name: active
+    clusterSelector:
+      matchLabels:
+        dr-role: active
+    kustomize:
+      dir: overlays/on
+  - name: standby
+    clusterSelector:
+      matchLabels:
+        dr-role: standby
+    kustomize:
+      dir: overlays/off
