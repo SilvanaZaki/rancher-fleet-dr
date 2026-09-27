@@ -1,0 +1,7 @@
+#What i will do on the ACTIVE CLUSTER
+#SAME-FORMAT-IN-ALL-APPs
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
