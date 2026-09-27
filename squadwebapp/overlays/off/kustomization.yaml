@@ -1,4 +1,5 @@
 #What i will don on the PASSIVE CLUSTER
+#SAME-FORMAT-IN-ALL-APPs
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
