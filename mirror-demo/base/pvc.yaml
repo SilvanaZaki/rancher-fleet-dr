@@ -5,6 +5,7 @@ metadata:
 spec:
   accessModes: [ReadWriteOnce]
   storageClassName: rook-ceph-block
+  volumeName: pvc-563b8dc5-2538-4485-991e-76fb94b4b43a      #Added later after PV link between PVC and Image (Same in main and DR )
   resources:
     requests:
       storage: 1Gi
